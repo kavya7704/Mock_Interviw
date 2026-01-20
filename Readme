@@ -1,0 +1,322 @@
+->Greetings
+->User Uploads
+->Questions - Interview type
+ 	    - Resume / JD
+ 	    (- Difficulty Level)
+->Questions based on the resume and JD
+->Overall Performance rating
+->Improvements
+
+
+# 🎯 FINAL MVP (END OF WEEK)
+
+A **mock interview system** that:
+
+✅ Takes
+
+* Resume (text / PDF)
+* Job Description
+* Interview type (HR / Technical / Behavioral)
+* Difficulty (Easy / Medium / Hard)
+
+✅ Conducts an interview where:
+
+* User **speaks answers**
+* System **listens via microphone**
+* AI **responds with text only**
+* Smart follow-ups are asked
+* Final structured feedback is generated
+
+🚫 No voice output
+🚫 No real-time streaming
+🚫 No video
+
+---
+
+# 🧠 SYSTEM ARCHITECTURE (SIMPLE & CLEAN)
+
+```
+User Voice
+   ↓
+Speech-to-Text (STT)
+   ↓
+Interview Brain (LLM)
+   ↓
+Text Response (UI)
+```
+
+
+# 📅 7-DAY EXECUTION ROADMAP
+
+## 🗓️ DAY 1 – ALIGNMENT & DESIGN (ALL 3)
+
+### Lock Scope (NO CHANGES AFTER THIS)
+
+* Max 5 interview questions
+* English only
+* Text responses only
+* Single interviewer persona
+
+### Decide Tech Stack
+
+* **STT:** OpenAI Whisper
+* **LLM:** GPT-4 / GPT-3.5
+* **Backend:** FastAPI
+* **Frontend:** Streamlit (fastest)
+
+### Define Input Schema
+
+```json
+{
+  "resume": "text",
+  "job_description": "text",
+  "interview_type": "technical | hr | behavioral",
+  "difficulty": "easy | medium | hard"
+}
+```
+
+✅ Deliverables:
+
+* Architecture diagram
+* Repo structure
+* Shared Google Doc with prompts
+
+---
+
+## 🗓️ DAY 2 – Parallel Work Starts
+
+### 👤 Person 1 – Voice Input + UI
+
+* Microphone input working
+* Convert speech → text
+* Display AI responses in chat format
+
+### 👤 Person 2 – Resume & JD Understanding
+
+* Prompt to summarize resume
+* Prompt to extract skills from JD
+* Merge both into interview context
+
+### 👤 Person 3 – Backend Skeleton
+
+* FastAPI app
+* Endpoints:
+
+  * `/start_interview`
+  * `/submit_answer`
+* Session handling
+
+✅ Deliverable:
+
+* Speech → text works
+* Text-only interview loop works
+
+---
+
+## 🗓️ DAY 3 – Question Generation & Difficulty Logic
+
+### 👤 Person 1
+
+* “Listening…” UI indicator
+* Submit transcript to backend
+
+### 👤 Person 2
+
+* Question generation prompt
+* Difficulty behavior:
+
+  * Easy → direct
+  * Medium → scenario based
+  * Hard → trade-offs / edge cases
+
+### 👤 Person 3
+
+* Interview state machine
+* Store:
+
+  * Questions
+  * Answers
+  * Turn count
+
+✅ Deliverable:
+
+* AI asks relevant interview questions
+
+---
+
+## 🗓️ DAY 4 – Follow-ups & Interview Flow
+
+### Follow-up Rules
+
+Ask follow-up if:
+
+* Answer is too short
+* Key skill missing
+* Candidate avoids question
+
+### 👤 Person 2 – Follow-up Prompt
+
+```text
+Decide whether a follow-up question is needed.
+If yes, ask ONE concise follow-up.
+```
+
+### 👤 Person 3 – Flow Control
+
+```
+Question → Answer → Follow-up → Next Question
+```
+
+### 👤 Person 1
+
+* Display follow-ups clearly
+* Scrollable interview history
+
+✅ Deliverable:
+
+* Interview feels conversational
+
+---
+
+## 🗓️ DAY 5 – Answer Evaluation & Scoring
+
+### Evaluation Criteria
+
+* Relevance
+* Clarity
+* Depth
+* Communication quality
+
+### 👤 Person 2 – Evaluation Prompt
+
+```text
+Score this answer from 0–10.
+Give strengths and improvements.
+```
+
+### 👤 Person 3
+
+* Store scores
+* Calculate overall score
+
+### 👤 Person 1
+
+* Show per-question score (optional)
+* Clean transcript display
+
+✅ Deliverable:
+
+* Automatic scoring per answer
+
+---
+
+## 🗓️ DAY 6 – Final Feedback Report
+
+### Final Report Includes:
+
+* Overall score
+* Skill-wise feedback
+* Weak areas
+* Improvement suggestions
+
+### 👤 Person 2
+
+* Feedback generation prompt
+
+### 👤 Person 3
+
+* Combine all interview data
+* Generate final report
+
+### 👤 Person 1
+
+* Final feedback UI section
+
+✅ Deliverable:
+
+* Clear, actionable feedback
+
+---
+
+## 🗓️ DAY 7 – Testing, Polish & Demo
+
+### Test Scenarios
+
+* Very short answers
+* Nervous pauses
+* Resume vs JD mismatch
+* Different difficulty levels
+
+### Final Touches
+
+* Better prompts
+* Reduced latency
+* Clean UI
+
+✅ Deliverable:
+
+* Demo-ready MVP
+* README
+* Recorded demo (optional)
+
+---
+
+# 🔑 CORE PROMPTS YOU MUST HAVE
+
+1️⃣ Resume + JD summarization
+2️⃣ Question generation
+3️⃣ Follow-up decision
+4️⃣ Answer evaluation
+5️⃣ Final feedback generation
+
+(LLM quality depends on these)
+
+---
+
+# ⚠️ COMMON MISTAKES TO AVOID
+
+❌ Trying to do voice output
+❌ Overcomplicated frontend
+❌ Streaming audio
+❌ Too many interview types
+❌ No session state
+
+---
+
+# 🧠 WHY THIS WILL WORK IN 1 WEEK
+
+* Voice **input only** (cuts complexity by 50%)
+* Text output (fast, reliable)
+* Clear team ownership
+* Prompt-driven intelligence
+* Proven APIs
+
+---
+
+## 🚀 NEXT STEPS (IF YOU WANT)
+
+I can:
+
+* Assign **exact daily tasks per person**
+* Write **ready-to-use prompt templates**
+* Provide **FastAPI + Streamlit starter code**
+* Help you plan **Week-2 upgrades**
+
+Just tell me:
+👉 Are you using **Streamlit or Web UI**?
+
+
+
+
+
+HTML + JS (Browser)
+   ↓ (audio blob)
+FastAPI Backend
+   ↓
+Whisper (STT)
+   ↓
+LLM Interview Logic
+   ↓
+Text Response
+   ↑
+Display in HTML
