@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mock Interview Prep — Resume + JD</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --panel: rgba(255, 255, 255, 0.06);
+        --panel2: rgba(255, 255, 255, 0.08);
+        --text: #eaf0ff;
+        --muted: rgba(234, 240, 255, 0.7);
+        --border: rgba(234, 240, 255, 0.16);
+        --accent: #7c5cff;
+        --accent2: #19c37d;
+        --danger: #ff5c75;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(1200px 600px at 10% 0%, rgba(124, 92, 255, 0.35), transparent 60%),
+          radial-gradient(1000px 600px at 90% 20%, rgba(25, 195, 125, 0.20), transparent 55%),
+          radial-gradient(900px 550px at 40% 100%, rgba(255, 92, 117, 0.16), transparent 55%),
+          var(--bg);
+      }
+
+      .wrap { max-width: 1100px; margin: 0 auto; padding: 28px 16px 64px; }
+      header { display: flex; gap: 16px; align-items: flex-start; justify-content: space-between; margin-bottom: 18px; }
+      .brand h1 { margin: 0; font-size: 22px; letter-spacing: 0.2px; }
+      .brand p { margin: 8px 0 0; color: var(--muted); font-size: 13px; line-height: 1.4; max-width: 760px; }
+
+      .actionsTop { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+      button, select, input[type="file"], input[type="text"] {
+        font: inherit;
+      }
+      button {
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.06));
+        color: var(--text);
+        padding: 10px 12px;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: var(--shadow);
+      }
+      button:hover { border-color: rgba(234, 240, 255, 0.28); }
+      button.primary {
+        border-color: rgba(124, 92, 255, 0.55);
+        background: linear-gradient(180deg, rgba(124, 92, 255, 0.35), rgba(124, 92, 255, 0.18));
+      }
+      button.ghost { box-shadow: none; background: rgba(255,255,255,0.04); }
+      button.danger {
+        border-color: rgba(255, 92, 117, 0.45);
+        background: linear-gradient(180deg, rgba(255, 92, 117, 0.22), rgba(255, 92, 117, 0.10));
+      }
+      button:disabled { opacity: 0.55; cursor: not-allowed; }
+
+      .grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 14px; }
+      @media (max-width: 980px) { .grid { grid-template-columns: 1fr; } }
+
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 14px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(10px);
+      }
+
+      .card h2 { margin: 0 0 10px; font-size: 15px; letter-spacing: 0.2px; }
+      .card .sub { margin: 0 0 12px; color: var(--muted); font-size: 12px; }
+
+      .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      @media (max-width: 680px) { .row { grid-template-columns: 1fr; } }
+
+      .field { display: flex; flex-direction: column; gap: 8px; margin: 10px 0 0; }
+      label { font-size: 12px; color: var(--muted); }
+      .help { font-size: 12px; color: var(--muted); margin-top: 4px; }
+      input[type="file"], select, input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text);
+        outline: none;
+      }
+      select { cursor: pointer; }
+
+      .pillRow { display: flex; gap: 8px; flex-wrap: wrap; }
+      .pill {
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .status {
+        margin-top: 10px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.4;
+        min-height: 42px;
+      }
+      .status strong { color: var(--text); }
+      .status.ok { border-color: rgba(25, 195, 125, 0.35); }
+      .status.bad { border-color: rgba(255, 92, 117, 0.35); }
+
+      .split { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+      @media (max-width: 980px) { .split { grid-template-columns: 1fr; } }
+      textarea {
+        width: 100%;
+        min-height: 220px;
+        padding: 10px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: rgba(0, 0, 0, 0.20);
+        color: var(--text);
+        resize: vertical;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+        font-size: 12px;
+        line-height: 1.45;
+        outline: none;
+      }
+
+      .qList { margin: 10px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+      .qItem {
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 14px;
+        padding: 10px 12px;
+      }
+      .qMeta { display: flex; gap: 8px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+      .qMeta .tag { font-size: 11px; color: var(--muted); border: 1px solid var(--border); padding: 4px 8px; border-radius: 999px; }
+      .qText { margin-top: 8px; font-size: 13px; line-height: 1.45; }
+
+      .footerNote { margin-top: 10px; color: var(--muted); font-size: 12px; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div class="brand">
+          <h1>Mock Interview Prep</h1>
+          <p>
+            Upload your <strong>Resume</strong> and <strong>Job Description (PDF)</strong>. This page extracts text locally in your browser,
+            summarizes key skills/keywords, and generates a basic set of questions based on interview type + difficulty.
+          </p>
+        </div>
+        <div class="actionsTop">
+          <button class="ghost" id="btnLoadDemo" type="button">Load demo text</button>
+          <button class="ghost" id="btnExport" type="button" disabled>Export JSON</button>
+          <button class="danger" id="btnReset" type="button">Reset</button>
+        </div>
+      </header>
+
+      <div class="grid">
+        <section class="card">
+          <h2>1) Inputs</h2>
+          <p class="sub">Resume can be <span class="mono">.pdf</span> or <span class="mono">.txt</span>. JD must be <span class="mono">.pdf</span>.</p>
+
+          <div class="row">
+            <div class="field">
+              <label for="resumeFile">Resume (PDF/TXT)</label>
+              <input id="resumeFile" type="file" accept=".pdf,.txt,application/pdf,text/plain" />
+              <div class="help" id="resumeHelp">Not uploaded</div>
+            </div>
+
+            <div class="field">
+              <label for="jdFile">Job Description (PDF)</label>
+              <input id="jdFile" type="file" accept=".pdf,application/pdf" />
+              <div class="help" id="jdHelp">Not uploaded</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label for="interviewType">Interview type</label>
+              <select id="interviewType">
+                <option value="technical">Technical</option>
+                <option value="hr">HR</option>
+                <option value="behavioral">Behavioral</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="difficulty">Difficulty</label>
+              <select id="difficulty">
+                <option value="easy">Easy</option>
+                <option value="medium" selected>Medium</option>
+                <option value="hard">Hard</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="roleTitle">Target role title (optional)</label>
+            <input id="roleTitle" type="text" placeholder="e.g., Frontend Developer, Data Analyst, Java Developer" />
+            <div class="help">Used to tailor a few question wordings.</div>
+          </div>
+
+          <div class="pillRow" style="margin-top: 12px">
+            <span class="pill">Local-only parsing</span>
+            <span class="pill">No backend required</span>
+            <span class="pill">PDF → text via PDF.js</span>
+          </div>
+
+          <div id="status" class="status"><strong>Status:</strong> Upload files to begin.</div>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top: 12px">
+            <button class="primary" id="btnParse" type="button">Extract text</button>
+            <button class="primary" id="btnGenerate" type="button" disabled>Generate questions</button>
+            <button class="ghost" id="btnCopyQuestions" type="button" disabled>Copy questions</button>
+          </div>
+
+          <div class="split">
+            <div>
+              <div class="help"><strong>Resume text preview</strong> (editable)</div>
+              <textarea id="resumeText" placeholder="Resume text will appear here..."></textarea>
+            </div>
+            <div>
+              <div class="help"><strong>JD text preview</strong> (editable)</div>
+              <textarea id="jdText" placeholder="JD text will appear here..."></textarea>
+            </div>
+          </div>
+
+          <div class="footerNote">
+            Tip: after extraction you can edit the text boxes to remove headers/footers for cleaner questions.
+          </div>
+        </section>
+
+        <aside class="card">
+          <h2>2) Key signals</h2>
+          <p class="sub">Very simple heuristics (keywords + skill hints). Enough for an MVP frontend.</p>
+
+          <div class="field">
+            <label>Top JD keywords</label>
+            <div id="jdKeywords" class="pillRow"></div>
+          </div>
+
+          <div class="field">
+            <label>Top Resume keywords</label>
+            <div id="resumeKeywords" class="pillRow"></div>
+          </div>
+
+          <div class="field">
+            <label>Skill overlap (JD ∩ Resume)</label>
+            <div id="overlap" class="pillRow"></div>
+          </div>
+
+          <div class="field">
+            <label>Potential gaps (JD - Resume)</label>
+            <div id="gaps" class="pillRow"></div>
+          </div>
+
+          <h2 style="margin-top: 14px;">3) Generated questions</h2>
+          <p class="sub">Up to 5 questions (as per MVP scope in `DOCUMENTS.txt`).</p>
+          <ul id="questions" class="qList"></ul>
+        </aside>
+      </div>
+    </div>
+
+    <!-- PDF.js (CDN). This keeps the project "basic HTML+JS" while enabling real PDF text extraction. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.js"></script>
+    <script>
+      // ---- State ----
+      const state = {
+        resume: { name: null, text: "" },
+        jd: { name: null, text: "" },
+        derived: {
+          resumeKeywords: [],
+          jdKeywords: [],
+          overlap: [],
+          gaps: []
+        },
+        questions: []
+      };
+
+      const els = {
+        resumeFile: document.getElementById("resumeFile"),
+        jdFile: document.getElementById("jdFile"),
+        resumeHelp: document.getElementById("resumeHelp"),
+        jdHelp: document.getElementById("jdHelp"),
+        interviewType: document.getElementById("interviewType"),
+        difficulty: document.getElementById("difficulty"),
+        roleTitle: document.getElementById("roleTitle"),
+        status: document.getElementById("status"),
+        btnParse: document.getElementById("btnParse"),
+        btnGenerate: document.getElementById("btnGenerate"),
+        btnCopyQuestions: document.getElementById("btnCopyQuestions"),
+        btnExport: document.getElementById("btnExport"),
+        btnReset: document.getElementById("btnReset"),
+        btnLoadDemo: document.getElementById("btnLoadDemo"),
+        resumeText: document.getElementById("resumeText"),
+        jdText: document.getElementById("jdText"),
+        resumeKeywords: document.getElementById("resumeKeywords"),
+        jdKeywords: document.getElementById("jdKeywords"),
+        overlap: document.getElementById("overlap"),
+        gaps: document.getElementById("gaps"),
+        questions: document.getElementById("questions")
+      };
+
+      const STORAGE_KEY = "mock_interview_prep_v1";
+
+      // ---- Utilities ----
+      function setStatus(message, type = "info") {
+        els.status.classList.remove("ok", "bad");
+        if (type === "ok") els.status.classList.add("ok");
+        if (type === "bad") els.status.classList.add("bad");
+        els.status.innerHTML = "<strong>Status:</strong> " + message;
+      }
+
+      function humanFile(file) {
+        if (!file) return "Not uploaded";
+        const kb = Math.max(1, Math.round(file.size / 1024));
+        return `${file.name} (${kb} KB)`;
+      }
+
+      function escapeHtml(s) {
+        return String(s)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function pill(text) {
+        const span = document.createElement("span");
+        span.className = "pill";
+        span.textContent = text;
+        return span;
+      }
+
+      function renderPills(container, items, emptyText = "—") {
+        container.innerHTML = "";
+        if (!items || items.length === 0) {
+          container.appendChild(pill(emptyText));
+          return;
+        }
+        for (const it of items) container.appendChild(pill(it));
+      }
+
+      function normalizeText(s) {
+        return String(s || "")
+          .replace(/\u00A0/g, " ")
+          .replace(/[ \t]+\n/g, "\n")
+          .replace(/\n{3,}/g, "\n\n")
+          .trim();
+      }
+
+      const STOPWORDS = new Set([
+        "a","an","and","are","as","at","be","by","for","from","has","have","he","in","is","it","its","of","on","or","that",
+        "the","to","was","were","will","with","you","your","we","our","i","me","my","they","them","their","this","those","these",
+        "can","could","should","would","may","might","must","not","no","yes","also","than","then","there","here","such","etc",
+        "role","responsibilities","requirements","preferred","qualification","qualifications","experience","years","year","skills",
+        "ability","strong","including","using","used","work","working","team","teams"
+      ]);
+
+      function tokenize(text) {
+        const clean = String(text || "")
+          .toLowerCase()
+          .replace(/[^a-z0-9+\-#.\s]/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+        if (!clean) return [];
+        return clean.split(" ").filter(Boolean);
+      }
+
+      function topKeywords(text, limit = 12) {
+        const toks = tokenize(text).filter(t => t.length >= 3 && !STOPWORDS.has(t));
+        const freq = new Map();
+        for (const t of toks) freq.set(t, (freq.get(t) || 0) + 1);
+        const sorted = [...freq.entries()].sort((a, b) => b[1] - a[1]);
+        return sorted.slice(0, limit).map(([w]) => w);
+      }
+
+      // A small "skill hint" dictionary to make overlap/gaps feel more relevant than raw keywords.
+      const SKILL_HINTS = [
+        "javascript","typescript","react","angular","vue","node","express","next.js","html","css","sass","tailwind",
+        "python","java","c#","c++","sql","postgres","mysql","mongodb","redis",
+        "aws","azure","gcp","docker","kubernetes","ci","cd","git","rest","graphql",
+        "testing","jest","cypress","playwright","pytest",
+        "system","design","dsa","algorithms","data","structures","oop"
+      ];
+
+      function detectSkills(text) {
+        const lower = String(text || "").toLowerCase();
+        const found = new Set();
+        for (const s of SKILL_HINTS) {
+          const needle = s.toLowerCase();
+          // Simple boundary-ish matching:
+          const re = new RegExp("(^|[^a-z0-9])" + needle.replaceAll(".", "\\.") + "([^a-z0-9]|$)", "i");
+          if (re.test(lower)) found.add(s);
+        }
+        return [...found].sort((a, b) => a.localeCompare(b));
+      }
+
+      async function readTextFile(file) {
+        return normalizeText(await file.text());
+      }
+
+      async function readPdfText(file) {
+        if (!window.pdfjsLib) throw new Error("PDF.js failed to load. Check internet connection.");
+        // If you host locally later: pdfjsLib.GlobalWorkerOptions.workerSrc = "pdf.worker.min.js";
+        const bytes = await file.arrayBuffer();
+        const pdf = await pdfjsLib.getDocument({ data: bytes }).promise;
+        let out = "";
+        for (let i = 1; i <= pdf.numPages; i++) {
+          const page = await pdf.getPage(i);
+          const content = await page.getTextContent();
+          const strings = content.items.map(it => it.str).filter(Boolean);
+          out += strings.join(" ") + "\n";
+        }
+        return normalizeText(out);
+      }
+
+      function deriveSignals() {
+        const resumeText = normalizeText(els.resumeText.value);
+        const jdText = normalizeText(els.jdText.value);
+
+        const resumeKw = topKeywords(resumeText, 12);
+        const jdKw = topKeywords(jdText, 12);
+
+        const resumeSkills = new Set(detectSkills(resumeText));
+        const jdSkills = new Set(detectSkills(jdText));
+        const overlap = [...jdSkills].filter(s => resumeSkills.has(s));
+        const gaps = [...jdSkills].filter(s => !resumeSkills.has(s));
+
+        state.resume.text = resumeText;
+        state.jd.text = jdText;
+        state.derived.resumeKeywords = resumeKw;
+        state.derived.jdKeywords = jdKw;
+        state.derived.overlap = overlap;
+        state.derived.gaps = gaps;
+
+        renderPills(els.resumeKeywords, resumeKw, "No keywords yet");
+        renderPills(els.jdKeywords, jdKw, "No keywords yet");
+        renderPills(els.overlap, overlap, "No overlap yet");
+        renderPills(els.gaps, gaps.slice(0, 10), gaps.length ? "—" : "No gaps found");
+      }
+
+      function difficultyFlavor(diff) {
+        if (diff === "easy") return { depth: "basic", follow: "short", scenario: "light" };
+        if (diff === "hard") return { depth: "deep", follow: "probing", scenario: "heavy" };
+        return { depth: "moderate", follow: "balanced", scenario: "medium" };
+      }
+
+      function generateQuestions() {
+        const interviewType = els.interviewType.value;
+        const diff = els.difficulty.value;
+        const role = normalizeText(els.roleTitle.value) || "this role";
+        const flavor = difficultyFlavor(diff);
+
+        const overlap = state.derived.overlap.slice(0, 5);
+        const gaps = state.derived.gaps.slice(0, 5);
+        const jdKw = state.derived.jdKeywords.slice(0, 6);
+
+        const focusSkill = overlap[0] || jdKw[0] || "your core skills";
+        const stretchSkill = gaps[0] || jdKw[1] || "a key requirement";
+
+        /** @type {{id:string,type:string,difficulty:string,question:string}[]} */
+        const qs = [];
+
+        if (interviewType === "technical") {
+          qs.push({
+            id: "q1",
+            type: "technical",
+            difficulty: diff,
+            question: `Walk me through a recent project from your resume that’s most relevant to ${role}. What did you build, and what impact did it have?`
+          });
+          qs.push({
+            id: "q2",
+            type: "technical",
+            difficulty: diff,
+            question: `The JD emphasizes "${focusSkill}". Explain how you’ve used it end-to-end (design → implementation → testing → deployment). Keep it ${flavor.depth}.`
+          });
+          qs.push({
+            id: "q3",
+            type: "technical",
+            difficulty: diff,
+            question: `Design question (${flavor.scenario}): given a feature similar to what’s described in the JD (${jdKw.slice(0, 3).join(", ") || "key requirements"}), how would you design the system/components? Call out trade-offs.`
+          });
+          qs.push({
+            id: "q4",
+            type: "technical",
+            difficulty: diff,
+            question: `What are common pitfalls or edge cases when working with "${focusSkill}"? How do you detect and prevent them? Be ${flavor.follow}.`
+          });
+          qs.push({
+            id: "q5",
+            type: "technical",
+            difficulty: diff,
+            question: `The JD mentions "${stretchSkill}". If you had 2 weeks to ramp up, what would your learning plan and first deliverable look like?`
+          });
+        } else if (interviewType === "hr") {
+          qs.push({
+            id: "q1",
+            type: "hr",
+            difficulty: diff,
+            question: `Tell me about yourself, and why you’re interested in ${role}.`
+          });
+          qs.push({
+            id: "q2",
+            type: "hr",
+            difficulty: diff,
+            question: `Pick one achievement from your resume. How did you measure success, and what would you do differently next time?`
+          });
+          qs.push({
+            id: "q3",
+            type: "hr",
+            difficulty: diff,
+            question: `This role needs "${focusSkill}". Describe a time you demonstrated it under pressure (tight deadline / ambiguity).`
+          });
+          qs.push({
+            id: "q4",
+            type: "hr",
+            difficulty: diff,
+            question: `What’s a conflict you’ve had on a team? How did you resolve it? Keep it ${flavor.depth} and specific.`
+          });
+          qs.push({
+            id: "q5",
+            type: "hr",
+            difficulty: diff,
+            question: `What are your biggest gaps for this JD (e.g., "${stretchSkill}") and how are you addressing them?`
+          });
+        } else {
+          // behavioral
+          qs.push({
+            id: "q1",
+            type: "behavioral",
+            difficulty: diff,
+            question: `Tell me about a time you took ownership of a messy problem. What was the situation, and what actions did you take? (Use STAR.)`
+          });
+          qs.push({
+            id: "q2",
+            type: "behavioral",
+            difficulty: diff,
+            question: `Describe a time you had to learn "${stretchSkill}" (or something new) quickly. How did you prioritize, and what was the outcome?`
+          });
+          qs.push({
+            id: "q3",
+            type: "behavioral",
+            difficulty: diff,
+            question: `Tell me about a time you improved quality or reliability (bugs, testing, process). What did you change and why?`
+          });
+          qs.push({
+            id: "q4",
+            type: "behavioral",
+            difficulty: diff,
+            question: `Describe a time you disagreed with a technical decision. How did you communicate, and what happened?`
+          });
+          qs.push({
+            id: "q5",
+            type: "behavioral",
+            difficulty: diff,
+            question: `What’s the hardest feedback you’ve received, and how did you apply it? Keep it ${flavor.follow}.`
+          });
+        }
+
+        state.questions = qs;
+        renderQuestions();
+        els.btnCopyQuestions.disabled = qs.length === 0;
+        els.btnExport.disabled = qs.length === 0;
+        saveToStorage();
+      }
+
+      function renderQuestions() {
+        const qs = state.questions || [];
+        els.questions.innerHTML = "";
+        if (qs.length === 0) {
+          const li = document.createElement("li");
+          li.className = "qItem";
+          li.innerHTML = `<div class="qText" style="color:rgba(234,240,255,.7)">No questions yet. Upload + extract text, then click <strong>Generate questions</strong>.</div>`;
+          els.questions.appendChild(li);
+          return;
+        }
+        for (const q of qs) {
+          const li = document.createElement("li");
+          li.className = "qItem";
+          li.innerHTML = `
+            <div class="qMeta">
+              <span class="tag">${escapeHtml(q.type.toUpperCase())}</span>
+              <span class="tag">${escapeHtml(q.difficulty.toUpperCase())}</span>
+            </div>
+            <div class="qText">${escapeHtml(q.question)}</div>
+          `;
+          els.questions.appendChild(li);
+        }
+      }
+
+      function saveToStorage() {
+        const payload = {
+          version: 1,
+          savedAt: new Date().toISOString(),
+          resumeName: state.resume.name,
+          jdName: state.jd.name,
+          resumeText: els.resumeText.value,
+          jdText: els.jdText.value,
+          interviewType: els.interviewType.value,
+          difficulty: els.difficulty.value,
+          roleTitle: els.roleTitle.value,
+          derived: state.derived,
+          questions: state.questions
+        };
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        } catch (_) {
+          // ignore quota / blocked storage
+        }
+      }
+
+      function loadFromStorage() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return false;
+          const payload = JSON.parse(raw);
+
+          els.interviewType.value = payload.interviewType || "technical";
+          els.difficulty.value = payload.difficulty || "medium";
+          els.roleTitle.value = payload.roleTitle || "";
+          els.resumeText.value = payload.resumeText || "";
+          els.jdText.value = payload.jdText || "";
+
+          state.resume.name = payload.resumeName || null;
+          state.jd.name = payload.jdName || null;
+          state.derived = payload.derived || state.derived;
+          state.questions = payload.questions || [];
+
+          // Update UI
+          els.resumeHelp.textContent = state.resume.name ? `${state.resume.name} (restored text)` : "Not uploaded";
+          els.jdHelp.textContent = state.jd.name ? `${state.jd.name} (restored text)` : "Not uploaded";
+          deriveSignals();
+          renderQuestions();
+          const ready = normalizeText(els.resumeText.value).length > 0 && normalizeText(els.jdText.value).length > 0;
+          els.btnGenerate.disabled = !ready;
+          els.btnCopyQuestions.disabled = state.questions.length === 0;
+          els.btnExport.disabled = state.questions.length === 0;
+          setStatus(ready ? "Restored previous session. You can generate new questions anytime." : "Restored session shell. Upload files or paste text to proceed.", "ok");
+          return true;
+        } catch (_) {
+          return false;
+        }
+      }
+
+      function resetAll() {
+        state.resume = { name: null, text: "" };
+        state.jd = { name: null, text: "" };
+        state.derived = { resumeKeywords: [], jdKeywords: [], overlap: [], gaps: [] };
+        state.questions = [];
+
+        els.resumeFile.value = "";
+        els.jdFile.value = "";
+        els.resumeHelp.textContent = "Not uploaded";
+        els.jdHelp.textContent = "Not uploaded";
+        els.roleTitle.value = "";
+        els.interviewType.value = "technical";
+        els.difficulty.value = "medium";
+        els.resumeText.value = "";
+        els.jdText.value = "";
+
+        renderPills(els.resumeKeywords, [], "No keywords yet");
+        renderPills(els.jdKeywords, [], "No keywords yet");
+        renderPills(els.overlap, [], "No overlap yet");
+        renderPills(els.gaps, [], "No gaps yet");
+        state.questions = [];
+        renderQuestions();
+
+        els.btnGenerate.disabled = true;
+        els.btnCopyQuestions.disabled = true;
+        els.btnExport.disabled = true;
+        try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
+        setStatus("Reset complete. Upload files to begin.", "ok");
+      }
+
+      async function extractText() {
+        const resumeFile = els.resumeFile.files && els.resumeFile.files[0];
+        const jdFile = els.jdFile.files && els.jdFile.files[0];
+
+        if (!resumeFile && !jdFile && (!els.resumeText.value || !els.jdText.value)) {
+          setStatus("Please upload Resume + JD, or paste text into the boxes.", "bad");
+          return;
+        }
+
+        setStatus("Extracting text… this can take a few seconds for large PDFs.");
+        els.btnParse.disabled = true;
+        els.btnGenerate.disabled = true;
+
+        try {
+          if (resumeFile) {
+            state.resume.name = resumeFile.name;
+            if (resumeFile.type === "application/pdf" || resumeFile.name.toLowerCase().endsWith(".pdf")) {
+              els.resumeText.value = await readPdfText(resumeFile);
+            } else {
+              els.resumeText.value = await readTextFile(resumeFile);
+            }
+            els.resumeHelp.textContent = humanFile(resumeFile);
+          }
+
+          if (jdFile) {
+            state.jd.name = jdFile.name;
+            if (!(jdFile.type === "application/pdf" || jdFile.name.toLowerCase().endsWith(".pdf"))) {
+              throw new Error("JD must be a PDF.");
+            }
+            els.jdText.value = await readPdfText(jdFile);
+            els.jdHelp.textContent = humanFile(jdFile);
+          }
+
+          deriveSignals();
+          const ready = normalizeText(els.resumeText.value).length > 0 && normalizeText(els.jdText.value).length > 0;
+          els.btnGenerate.disabled = !ready;
+          setStatus(ready ? "Text extracted. Review/edit previews, then click “Generate questions”." : "Extraction finished, but one input is empty.", ready ? "ok" : "bad");
+          saveToStorage();
+        } catch (err) {
+          setStatus(escapeHtml(err.message || String(err)), "bad");
+        } finally {
+          els.btnParse.disabled = false;
+        }
+      }
+
+      function copyQuestionsToClipboard() {
+        const qs = state.questions || [];
+        if (qs.length === 0) return;
+        const payload =
+          `Mock Interview Questions (${els.interviewType.value.toUpperCase()} / ${els.difficulty.value.toUpperCase()})\n` +
+          `Role: ${normalizeText(els.roleTitle.value) || "—"}\n\n` +
+          qs.map((q, i) => `${i + 1}. ${q.question}`).join("\n\n");
+        navigator.clipboard.writeText(payload).then(
+          () => setStatus("Copied questions to clipboard.", "ok"),
+          () => setStatus("Could not access clipboard (browser permission). Use Export JSON instead.", "bad")
+        );
+      }
+
+      function exportJson() {
+        const payload = {
+          resumeName: state.resume.name,
+          jdName: state.jd.name,
+          interviewType: els.interviewType.value,
+          difficulty: els.difficulty.value,
+          roleTitle: normalizeText(els.roleTitle.value),
+          derived: state.derived,
+          questions: state.questions,
+          resumeText: normalizeText(els.resumeText.value),
+          jdText: normalizeText(els.jdText.value)
+        };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "mock-interview-session.json";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(a.href);
+        setStatus("Exported JSON file.", "ok");
+      }
+
+      function loadDemo() {
+        els.resumeText.value = normalizeText(`
+          John Doe — Frontend Developer
+          Skills: JavaScript, TypeScript, React, HTML, CSS, REST, Git, Jest
+          Experience:
+          - Built a React dashboard used by 2k users, improved load time by 35% via code-splitting and memoization.
+          - Implemented CI/CD pipelines and wrote unit/integration tests.
+          Projects:
+          - E-commerce storefront (Next.js), payment integration, analytics.
+        `);
+
+        els.jdText.value = normalizeText(`
+          We are hiring a Frontend Engineer.
+          Requirements:
+          - Strong React + TypeScript
+          - Experience with REST APIs, testing (Jest/Cypress), performance optimization
+          - Familiar with CI/CD, Git
+          Preferred:
+          - Next.js, accessibility, system design basics
+        `);
+
+        state.resume.name = "demo-resume.txt";
+        state.jd.name = "demo-jd.txt";
+        els.resumeHelp.textContent = "Demo loaded (text)";
+        els.jdHelp.textContent = "Demo loaded (text)";
+        deriveSignals();
+        els.btnGenerate.disabled = false;
+        setStatus("Demo loaded. Click “Generate questions”.", "ok");
+        saveToStorage();
+      }
+
+      // ---- Wire up events ----
+      els.resumeFile.addEventListener("change", () => {
+        const f = els.resumeFile.files && els.resumeFile.files[0];
+        els.resumeHelp.textContent = humanFile(f);
+      });
+      els.jdFile.addEventListener("change", () => {
+        const f = els.jdFile.files && els.jdFile.files[0];
+        els.jdHelp.textContent = humanFile(f);
+      });
+      els.resumeText.addEventListener("input", () => {
+        deriveSignals();
+        const ready = normalizeText(els.resumeText.value).length > 0 && normalizeText(els.jdText.value).length > 0;
+        els.btnGenerate.disabled = !ready;
+        saveToStorage();
+      });
+      els.jdText.addEventListener("input", () => {
+        deriveSignals();
+        const ready = normalizeText(els.resumeText.value).length > 0 && normalizeText(els.jdText.value).length > 0;
+        els.btnGenerate.disabled = !ready;
+        saveToStorage();
+      });
+      els.interviewType.addEventListener("change", saveToStorage);
+      els.difficulty.addEventListener("change", saveToStorage);
+      els.roleTitle.addEventListener("input", saveToStorage);
+
+      els.btnParse.addEventListener("click", extractText);
+      els.btnGenerate.addEventListener("click", () => {
+        deriveSignals();
+        generateQuestions();
+        setStatus("Questions generated. You can copy/export them.", "ok");
+      });
+      els.btnCopyQuestions.addEventListener("click", copyQuestionsToClipboard);
+      els.btnExport.addEventListener("click", exportJson);
+      els.btnReset.addEventListener("click", resetAll);
+      els.btnLoadDemo.addEventListener("click", loadDemo);
+
+      // ---- Init ----
+      renderQuestions();
+      renderPills(els.resumeKeywords, [], "No keywords yet");
+      renderPills(els.jdKeywords, [], "No keywords yet");
+      renderPills(els.overlap, [], "No overlap yet");
+      renderPills(els.gaps, [], "No gaps yet");
+
+      // Try restore previous session (best effort).
+      loadFromStorage();
+    </script>
+  </body>
+</html>
